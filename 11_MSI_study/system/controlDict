@@ -1,0 +1,221 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Website:  https://openfoam.org                  |
+|   \\  /    A nd           | Version:  8                                     |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "system";
+    object      controlDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+application     pimpleHFDIBFoam;
+
+startFrom       latestTime;
+
+startTime       0;
+
+stopAt          endTime;
+
+endTime         5.00;
+
+deltaT          1e-8;
+
+writeControl    adjustableRunTime;
+
+writeInterval   5e-3;
+
+purgeWrite      0;
+
+writeFormat     ascii;
+
+writePrecision  8;
+
+writeCompression uncompressed;
+
+timeFormat      general;
+
+timePrecision   8;
+
+maxCo           0.75;
+
+maxDeltaT       0.003;
+
+adjustTimeStep  yes;
+
+runTimeModifiable yes;
+
+// runTime postprocessing
+samplingTime    5e-4;
+sampledFields   (p U lambda);
+
+functions
+{
+    surfaceFieldValueInlet
+    {
+        // Mandatory entries (unmodifiable)
+        type            surfaceFieldValue;
+        libs            ("libfieldFunctionObjects.so");
+    
+        // Mandatory entries (runtime modifiable)
+        fields          $sampledFields;
+        operation       areaAverage;
+        regionType      patch;
+        name            inlet;
+    
+        // Optional (inherited) entries
+        writeFields     false;
+        scalingFactor   1.0;
+        writePrecision  8;
+        region          region0;
+        enabled         true;
+        log             true;
+        writeControl    adjustableRunTime;
+        writeInterval   $samplingTime;
+    }
+    
+    surfaceFieldValue0
+    {
+        // Mandatory entries (unmodifiable)
+        type            surfaceFieldValue;
+        libs            ("libfieldFunctionObjects.so");
+    
+        // Mandatory entries (runtime modifiable)
+        fields          $sampledFields;
+        operation       areaAverage;
+        regionType      sampledSurface;
+        sampledSurfaceDict
+        {
+            type        plane;
+            planeType       pointAndNormal;
+            pointAndNormalDict
+            {
+                basePoint   (0 2.0e-02 0);
+                normalVector (0 1 0);
+            }
+            interpolationScheme cell;
+        }
+        name            average1;
+    
+        // Optional (inherited) entries
+        writeFields     false;
+        scalingFactor   1.0;
+        writePrecision  8;
+        region          region0;
+        enabled         true;
+        log             true;
+        writeControl    adjustableRunTime;
+        writeInterval   $samplingTime;
+    }
+    
+    surfaceFieldValue1
+    {
+        // Mandatory entries (unmodifiable)
+        type            surfaceFieldValue;
+        libs            ("libfieldFunctionObjects.so");
+    
+        // Mandatory entries (runtime modifiable)
+        fields          $sampledFields;
+        operation       areaAverage;
+        regionType      sampledSurface;
+        sampledSurfaceDict
+        {
+            type        plane;
+            planeType       pointAndNormal;
+            pointAndNormalDict
+            {
+                basePoint   (0 7.0e-02 0);
+                normalVector (0 1 0);
+            }
+            interpolationScheme cell;
+        }
+        name            average1;
+    
+        // Optional (inherited) entries
+        writeFields     false;
+        scalingFactor   1.0;
+        writePrecision  8;
+        region          region0;
+        enabled         true;
+        log             true;
+        writeControl    adjustableRunTime;
+        writeInterval   $samplingTime;
+    }
+    
+    surfaceFieldValue2
+    {
+        // Mandatory entries (unmodifiable)
+        type            surfaceFieldValue;
+        libs            ("libfieldFunctionObjects.so");
+    
+        // Mandatory entries (runtime modifiable)
+        fields          $sampledFields;
+        operation       areaAverage;
+        regionType      sampledSurface;
+        sampledSurfaceDict
+        {
+            type        plane;
+            planeType       pointAndNormal;
+            pointAndNormalDict
+            {
+                basePoint   (0 12.0e-02 0);
+                normalVector (0 1 0);
+            }
+            interpolationScheme cell;
+        }
+        name            average1;
+    
+        // Optional (inherited) entries
+        writeFields     false;
+        scalingFactor   1.0;
+        writePrecision  8;
+        region          region0;
+        enabled         true;
+        log             true;
+        writeControl    adjustableRunTime;
+        writeInterval   $samplingTime;
+    }
+    
+    surfaceFieldValue3
+    {
+        // Mandatory entries (unmodifiable)
+        type            surfaceFieldValue;
+        libs            ("libfieldFunctionObjects.so");
+    
+        // Mandatory entries (runtime modifiable)
+        fields          $sampledFields;
+        operation       areaAverage;
+        regionType      sampledSurface;
+        sampledSurfaceDict
+        {
+            type        plane;
+            planeType       pointAndNormal;
+            pointAndNormalDict
+            {
+                basePoint   (0 17.00e-02 0);
+                normalVector (0 1 0);
+            }
+            interpolationScheme cell;
+        }
+        name            average1;
+    
+        // Optional (inherited) entries
+        writeFields     false;
+        scalingFactor   1.0;
+        writePrecision  8;
+        region          region0;
+        enabled         true;
+        log             true;
+        writeControl    adjustableRunTime;
+        writeInterval   $samplingTime;
+    }
+}
+
+
+// ************************************************************************* //
