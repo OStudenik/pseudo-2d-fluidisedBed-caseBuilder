@@ -1,4 +1,4 @@
-# Simulation builder for digital twin of pseudo-2D fluidized-bed
+# Case builder for numerical counterpart of pseudo-2D fluidized-bed
 
 This repository assembles OpenFOAM cases for the study **Particle-resolved
 direct numerical simulation of fluidized bed: Analysis of collision dynamics**,
