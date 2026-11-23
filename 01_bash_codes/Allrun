@@ -1,0 +1,11 @@
+#!/bin/bash
+. $WM_PROJECT_DIR/bin/tools/RunFunctions
+cp -rf 0.01 0.org
+# -- generate mesh via the blockMesh application
+runApplication blockMesh
+runApplication decomposePar -force
+application=`getApplication`
+runParallel $application &
+
+# end time
+date "+%d/%m/%Y %T"
