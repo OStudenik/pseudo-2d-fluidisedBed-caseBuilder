@@ -1,0 +1,36 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+  =========                 |
+  \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox
+   \\    /   O peration     | Website:  https://openfoam.org
+    \\  /    A nd           | Version:  8
+     \\/     M anipulation  |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "/home/vel1.4/bodiesInfo/0.01";
+    object      body1001.info;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+bodyId          1001;
+
+bodyName        sphereFalling;
+
+Vel             ( 0.020874793 -0.44828003 0.031804241 );
+
+omega           38.390243;
+
+Axis            ( -0.75271394 -0.19208386 -0.62970272 );
+
+static          0;
+
+timeStepsInContWStatic 0;
+
+sphere
+{
+    position        ( 0.0063278443 0.059029576 0.0038692035 );
+    radius          0.0009;
+}
