@@ -1,0 +1,1097 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Website:  https://openfoam.org                  |
+|   \\  /    A nd           | Version:  8                                     |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "system";
+    object      controlDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+application     pimpleHFDIBFoam;
+
+startFrom       latestTime;
+
+startTime       0;
+
+stopAt          endTime;
+
+endTime         6.00;
+
+deltaT          1e-8;
+
+writeControl    adjustableRunTime;
+
+writeInterval   5e-3;
+
+purgeWrite      0;
+
+writeFormat     ascii;
+
+writePrecision  8;
+
+writeCompression uncompressed;
+
+timeFormat      general;
+
+timePrecision   8;
+
+maxCo           0.75;
+
+maxDeltaT       0.0001;
+
+adjustTimeStep  yes;
+
+runTimeModifiable yes;
+
+// runTime postprocessing
+
+samplingTime    5e-4;
+sampledFields   (p U lambda);
+
+functions
+{
+    surfaceFieldValueInlet
+    {
+        // Mandatory entries (unmodifiable)
+        type            surfaceFieldValue;
+        libs            ("libfieldFunctionObjects.so");
+    
+        // Mandatory entries (runtime modifiable)
+        fields          $sampledFields;
+        operation       areaAverage;
+        regionType      patch;
+        name            inlet;
+    
+        // Optional (inherited) entries
+        writeFields     false;
+        scalingFactor   1.0;
+        writePrecision  8;
+        region          region0;
+        enabled         true;
+        log             true;
+        writeControl    adjustableRunTime;
+        writeInterval   $samplingTime;
+    }
+        
+    // Post processing slices for velocity and pressure profiles
+
+    surfaceFieldValue0
+    {
+        type            surfaceFieldValue;
+        libs            ("libfieldFunctionObjects.so");
+
+        fields          $sampledFields;
+        operation       areaAverage;
+        regionType      sampledSurface;
+        sampledSurfaceDict
+        {
+            type            plane;
+            planeType       pointAndNormal;
+            {
+                basePoint           (-0.0096 0 0);
+                normalVector        (1 0 0);
+            }
+            interpolateTo    cell;
+        };
+        name            average1;
+        writeFields     false;
+        scalingFactor   1.0;
+        writePrecision  8;
+        enabled         true;
+        log             true;
+        writeControl    adjustableRunTime;
+        writeInterval   $samplingTime;
+    }
+
+    surfaceFieldValue1
+    {
+        type            surfaceFieldValue;
+        libs            ("libfieldFunctionObjects.so");
+
+        fields          $sampledFields;
+        operation       areaAverage;
+        regionType      sampledSurface;
+        sampledSurfaceDict
+        {
+            type            plane;
+            planeType       pointAndNormal;
+            {
+                basePoint           (0.0 0 0);
+                normalVector        (1 0 0);
+            }
+            interpolateTo    cell;
+        };
+        name            average1;
+        writeFields     false;
+        scalingFactor   1.0;
+        writePrecision  8;
+        enabled         true;
+        log             true;
+        writeControl    adjustableRunTime;
+        writeInterval   $samplingTime;
+    }
+
+    surfaceFieldValue2
+    {
+        type            surfaceFieldValue;
+        libs            ("libfieldFunctionObjects.so");
+
+        fields          $sampledFields;
+        operation       areaAverage;
+        regionType      sampledSurface;
+        sampledSurfaceDict
+        {
+            type            plane;
+            planeType       pointAndNormal;
+            {
+                basePoint           (0.0096 0 0);
+                normalVector        (1 0 0);
+            }
+            interpolateTo    cell;
+        };
+        name            average1;
+        writeFields     false;
+        scalingFactor   1.0;
+        writePrecision  8;
+        enabled         true;
+        log             true;
+        writeControl    adjustableRunTime;
+        writeInterval   $samplingTime;
+    }
+
+    surfaceFieldValue3
+    {
+        type            surfaceFieldValue;
+        libs            ("libfieldFunctionObjects.so");
+
+        fields          $sampledFields;
+        operation       areaAverage;
+        regionType      sampledSurface;
+        sampledSurfaceDict
+        {
+            type            plane;
+            planeType       pointAndNormal;
+            {
+                basePoint           (0 0 0.0041);
+                normalVector        (0 0 1);
+            }
+            interpolateTo    cell;
+        };
+        name            average1;
+        writeFields     false;
+        scalingFactor   1.0;
+        writePrecision  8;
+        enabled         true;
+        log             true;
+        writeControl    adjustableRunTime;
+        writeInterval   $samplingTime;
+    }
+
+    surfaceFieldValue4
+    {
+        type            surfaceFieldValue;
+        libs            ("libfieldFunctionObjects.so");
+
+        fields          $sampledFields;
+        operation       areaAverage;
+        regionType      sampledSurface;
+        sampledSurfaceDict
+        {
+            type            plane;
+            planeType       pointAndNormal;
+            {
+                basePoint           (0 0 0.0023);
+                normalVector        (0 0 1);
+            }
+            interpolateTo    cell;
+        };
+        name            average1;
+        writeFields     false;
+        scalingFactor   1.0;
+        writePrecision  8;
+        enabled         true;
+        log             true;
+        writeControl    adjustableRunTime;
+        writeInterval   $samplingTime;
+    }
+
+    surfaceFieldValue5
+    {
+        type            surfaceFieldValue;
+        libs            ("libfieldFunctionObjects.so");
+
+        fields          $sampledFields;
+        operation       areaAverage;
+        regionType      sampledSurface;
+        sampledSurfaceDict
+        {
+            type            plane;
+            planeType       pointAndNormal;
+            {
+                basePoint           (0 0 0.0005);
+                normalVector        (0 0 1);
+            }
+            interpolateTo    cell;
+        };
+        name            average1;
+        writeFields     false;
+        scalingFactor   1.0;
+        writePrecision  8;
+        enabled         true;
+        log             true;
+        writeControl    adjustableRunTime;
+        writeInterval   $samplingTime;
+    }
+
+    surfaceFieldValue6
+    {
+        type            surfaceFieldValue;
+        libs            ("libfieldFunctionObjects.so");
+
+        fields          $sampledFields;
+        operation       areaAverage;
+        regionType      sampledSurface;
+        sampledSurfaceDict
+        {
+            type            plane;
+            planeType       pointAndNormal;
+            {
+                basePoint           (0 0 0.0032);
+                normalVector        (0 0 1);
+            }
+            interpolateTo    cell;
+        };
+        name            average1;
+        writeFields     false;
+        scalingFactor   1.0;
+        writePrecision  8;
+        enabled         true;
+        log             true;
+        writeControl    adjustableRunTime;
+        writeInterval   $samplingTime;
+    }
+
+    surfaceFieldValue7
+    {
+        type            surfaceFieldValue;
+        libs            ("libfieldFunctionObjects.so");
+
+        fields          $sampledFields;
+        operation       areaAverage;
+        regionType      sampledSurface;
+        sampledSurfaceDict
+        {
+            type            plane;
+            planeType       pointAndNormal;
+            {
+                basePoint           (0 -0.0192 0);
+                normalVector        (0 1 0);
+            }
+            interpolateTo    cell;
+        };
+        name            average1;
+        writeFields     false;
+        scalingFactor   1.0;
+        writePrecision  8;
+        enabled         true;
+        log             true;
+        writeControl    adjustableRunTime;
+        writeInterval   $samplingTime;
+    }
+
+    surfaceFieldValue8
+    {
+        type            surfaceFieldValue;
+        libs            ("libfieldFunctionObjects.so");
+
+        fields          $sampledFields;
+        operation       areaAverage;
+        regionType      sampledSurface;
+        sampledSurfaceDict
+        {
+            type            plane;
+            planeType       pointAndNormal;
+            {
+                basePoint           (0 -0.0084 0);
+                normalVector        (0 1 0);
+            }
+            interpolateTo    cell;
+        };
+        name            average1;
+        writeFields     false;
+        scalingFactor   1.0;
+        writePrecision  8;
+        enabled         true;
+        log             true;
+        writeControl    adjustableRunTime;
+        writeInterval   $samplingTime;
+    }
+
+    surfaceFieldValue9
+    {
+        type            surfaceFieldValue;
+        libs            ("libfieldFunctionObjects.so");
+
+        fields          $sampledFields;
+        operation       areaAverage;
+        regionType      sampledSurface;
+        sampledSurfaceDict
+        {
+            type            plane;
+            planeType       pointAndNormal;
+            {
+                basePoint           (0 0.0024 0);
+                normalVector        (0 1 0);
+            }
+            interpolateTo    cell;
+        };
+        name            average1;
+        writeFields     false;
+        scalingFactor   1.0;
+        writePrecision  8;
+        enabled         true;
+        log             true;
+        writeControl    adjustableRunTime;
+        writeInterval   $samplingTime;
+    }
+
+    surfaceFieldValue10
+    {
+        type            surfaceFieldValue;
+        libs            ("libfieldFunctionObjects.so");
+
+        fields          $sampledFields;
+        operation       areaAverage;
+        regionType      sampledSurface;
+        sampledSurfaceDict
+        {
+            type            plane;
+            planeType       pointAndNormal;
+            {
+                basePoint           (0 0.0132 0);
+                normalVector        (0 1 0);
+            }
+            interpolateTo    cell;
+        };
+        name            average1;
+        writeFields     false;
+        scalingFactor   1.0;
+        writePrecision  8;
+        enabled         true;
+        log             true;
+        writeControl    adjustableRunTime;
+        writeInterval   $samplingTime;
+    }
+
+    surfaceFieldValue11
+    {
+        type            surfaceFieldValue;
+        libs            ("libfieldFunctionObjects.so");
+
+        fields          $sampledFields;
+        operation       areaAverage;
+        regionType      sampledSurface;
+        sampledSurfaceDict
+        {
+            type            plane;
+            planeType       pointAndNormal;
+            {
+                basePoint           (0 0.024 0);
+                normalVector        (0 1 0);
+            }
+            interpolateTo    cell;
+        };
+        name            average1;
+        writeFields     false;
+        scalingFactor   1.0;
+        writePrecision  8;
+        enabled         true;
+        log             true;
+        writeControl    adjustableRunTime;
+        writeInterval   $samplingTime;
+    }
+
+    surfaceFieldValue12
+    {
+        type            surfaceFieldValue;
+        libs            ("libfieldFunctionObjects.so");
+
+        fields          $sampledFields;
+        operation       areaAverage;
+        regionType      sampledSurface;
+        sampledSurfaceDict
+        {
+            type            plane;
+            planeType       pointAndNormal;
+            {
+                basePoint           (0 0.0348 0);
+                normalVector        (0 1 0);
+            }
+            interpolateTo    cell;
+        };
+        name            average1;
+        writeFields     false;
+        scalingFactor   1.0;
+        writePrecision  8;
+        enabled         true;
+        log             true;
+        writeControl    adjustableRunTime;
+        writeInterval   $samplingTime;
+    }
+
+    surfaceFieldValue13
+    {
+        type            surfaceFieldValue;
+        libs            ("libfieldFunctionObjects.so");
+
+        fields          $sampledFields;
+        operation       areaAverage;
+        regionType      sampledSurface;
+        sampledSurfaceDict
+        {
+            type            plane;
+            planeType       pointAndNormal;
+            {
+                basePoint           (0 0.0456 0);
+                normalVector        (0 1 0);
+            }
+            interpolateTo    cell;
+        };
+        name            average1;
+        writeFields     false;
+        scalingFactor   1.0;
+        writePrecision  8;
+        enabled         true;
+        log             true;
+        writeControl    adjustableRunTime;
+        writeInterval   $samplingTime;
+    }
+
+    surfaceFieldValue14
+    {
+        type            surfaceFieldValue;
+        libs            ("libfieldFunctionObjects.so");
+
+        fields          $sampledFields;
+        operation       areaAverage;
+        regionType      sampledSurface;
+        sampledSurfaceDict
+        {
+            type            plane;
+            planeType       pointAndNormal;
+            {
+                basePoint           (0 0.0564 0);
+                normalVector        (0 1 0);
+            }
+            interpolateTo    cell;
+        };
+        name            average1;
+        writeFields     false;
+        scalingFactor   1.0;
+        writePrecision  8;
+        enabled         true;
+        log             true;
+        writeControl    adjustableRunTime;
+        writeInterval   $samplingTime;
+    }
+
+    surfaceFieldValue15
+    {
+        type            surfaceFieldValue;
+        libs            ("libfieldFunctionObjects.so");
+
+        fields          $sampledFields;
+        operation       areaAverage;
+        regionType      sampledSurface;
+        sampledSurfaceDict
+        {
+            type            plane;
+            planeType       pointAndNormal;
+            {
+                basePoint           (0 0.0672 0);
+                normalVector        (0 1 0);
+            }
+            interpolateTo    cell;
+        };
+        name            average1;
+        writeFields     false;
+        scalingFactor   1.0;
+        writePrecision  8;
+        enabled         true;
+        log             true;
+        writeControl    adjustableRunTime;
+        writeInterval   $samplingTime;
+    }
+
+    surfaceFieldValue16
+    {
+        type            surfaceFieldValue;
+        libs            ("libfieldFunctionObjects.so");
+
+        fields          $sampledFields;
+        operation       areaAverage;
+        regionType      sampledSurface;
+        sampledSurfaceDict
+        {
+            type            plane;
+            planeType       pointAndNormal;
+            {
+                basePoint           (0 0.078 0);
+                normalVector        (0 1 0);
+            }
+            interpolateTo    cell;
+        };
+        name            average1;
+        writeFields     false;
+        scalingFactor   1.0;
+        writePrecision  8;
+        enabled         true;
+        log             true;
+        writeControl    adjustableRunTime;
+        writeInterval   $samplingTime;
+    }
+
+    surfaceFieldValue17
+    {
+        type            surfaceFieldValue;
+        libs            ("libfieldFunctionObjects.so");
+
+        fields          $sampledFields;
+        operation       areaAverage;
+        regionType      sampledSurface;
+        sampledSurfaceDict
+        {
+            type            plane;
+            planeType       pointAndNormal;
+            {
+                basePoint           (0 0.0888 0);
+                normalVector        (0 1 0);
+            }
+            interpolateTo    cell;
+        };
+        name            average1;
+        writeFields     false;
+        scalingFactor   1.0;
+        writePrecision  8;
+        enabled         true;
+        log             true;
+        writeControl    adjustableRunTime;
+        writeInterval   $samplingTime;
+    }
+
+    surfaceFieldValue18
+    {
+        type            surfaceFieldValue;
+        libs            ("libfieldFunctionObjects.so");
+
+        fields          $sampledFields;
+        operation       areaAverage;
+        regionType      sampledSurface;
+        sampledSurfaceDict
+        {
+            type            plane;
+            planeType       pointAndNormal;
+            {
+                basePoint           (0 0.0996 0);
+                normalVector        (0 1 0);
+            }
+            interpolateTo    cell;
+        };
+        name            average1;
+        writeFields     false;
+        scalingFactor   1.0;
+        writePrecision  8;
+        enabled         true;
+        log             true;
+        writeControl    adjustableRunTime;
+        writeInterval   $samplingTime;
+    }
+
+    surfaceFieldValue19
+    {
+        type            surfaceFieldValue;
+        libs            ("libfieldFunctionObjects.so");
+
+        fields          $sampledFields;
+        operation       areaAverage;
+        regionType      sampledSurface;
+        sampledSurfaceDict
+        {
+            type            plane;
+            planeType       pointAndNormal;
+            {
+                basePoint           (0 0.1104 0);
+                normalVector        (0 1 0);
+            }
+            interpolateTo    cell;
+        };
+        name            average1;
+        writeFields     false;
+        scalingFactor   1.0;
+        writePrecision  8;
+        enabled         true;
+        log             true;
+        writeControl    adjustableRunTime;
+        writeInterval   $samplingTime;
+    }
+
+    surfaceFieldValue20
+    {
+        type            surfaceFieldValue;
+        libs            ("libfieldFunctionObjects.so");
+
+        fields          $sampledFields;
+        operation       areaAverage;
+        regionType      sampledSurface;
+        sampledSurfaceDict
+        {
+            type            plane;
+            planeType       pointAndNormal;
+            {
+                basePoint           (0 0.1212 0);
+                normalVector        (0 1 0);
+            }
+            interpolateTo    cell;
+        };
+        name            average1;
+        writeFields     false;
+        scalingFactor   1.0;
+        writePrecision  8;
+        enabled         true;
+        log             true;
+        writeControl    adjustableRunTime;
+        writeInterval   $samplingTime;
+    }
+
+    surfaceFieldValue21
+    {
+        type            surfaceFieldValue;
+        libs            ("libfieldFunctionObjects.so");
+
+        fields          $sampledFields;
+        operation       areaAverage;
+        regionType      sampledSurface;
+        sampledSurfaceDict
+        {
+            type            plane;
+            planeType       pointAndNormal;
+            {
+                basePoint           (0 0.132 0);
+                normalVector        (0 1 0);
+            }
+            interpolateTo    cell;
+        };
+        name            average1;
+        writeFields     false;
+        scalingFactor   1.0;
+        writePrecision  8;
+        enabled         true;
+        log             true;
+        writeControl    adjustableRunTime;
+        writeInterval   $samplingTime;
+    }
+
+    surfaceFieldValue22
+    {
+        type            surfaceFieldValue;
+        libs            ("libfieldFunctionObjects.so");
+
+        fields          $sampledFields;
+        operation       areaAverage;
+        regionType      sampledSurface;
+        sampledSurfaceDict
+        {
+            type            plane;
+            planeType       pointAndNormal;
+            {
+                basePoint           (0 0.1428 0);
+                normalVector        (0 1 0);
+            }
+            interpolateTo    cell;
+        };
+        name            average1;
+        writeFields     false;
+        scalingFactor   1.0;
+        writePrecision  8;
+        enabled         true;
+        log             true;
+        writeControl    adjustableRunTime;
+        writeInterval   $samplingTime;
+    }
+
+    surfaceFieldValue23
+    {
+        type            surfaceFieldValue;
+        libs            ("libfieldFunctionObjects.so");
+
+        fields          $sampledFields;
+        operation       areaAverage;
+        regionType      sampledSurface;
+        sampledSurfaceDict
+        {
+            type            plane;
+            planeType       pointAndNormal;
+            {
+                basePoint           (0 0.1536 0);
+                normalVector        (0 1 0);
+            }
+            interpolateTo    cell;
+        };
+        name            average1;
+        writeFields     false;
+        scalingFactor   1.0;
+        writePrecision  8;
+        enabled         true;
+        log             true;
+        writeControl    adjustableRunTime;
+        writeInterval   $samplingTime;
+    }
+
+    surfaceFieldValue24
+    {
+        type            surfaceFieldValue;
+        libs            ("libfieldFunctionObjects.so");
+
+        fields          $sampledFields;
+        operation       areaAverage;
+        regionType      sampledSurface;
+        sampledSurfaceDict
+        {
+            type            plane;
+            planeType       pointAndNormal;
+            {
+                basePoint           (0 0.1644 0);
+                normalVector        (0 1 0);
+            }
+            interpolateTo    cell;
+        };
+        name            average1;
+        writeFields     false;
+        scalingFactor   1.0;
+        writePrecision  8;
+        enabled         true;
+        log             true;
+        writeControl    adjustableRunTime;
+        writeInterval   $samplingTime;
+    }
+
+    surfaceFieldValue25
+    {
+        type            surfaceFieldValue;
+        libs            ("libfieldFunctionObjects.so");
+
+        fields          $sampledFields;
+        operation       areaAverage;
+        regionType      sampledSurface;
+        sampledSurfaceDict
+        {
+            type            plane;
+            planeType       pointAndNormal;
+            {
+                basePoint           (0 0.1752 0);
+                normalVector        (0 1 0);
+            }
+            interpolateTo    cell;
+        };
+        name            average1;
+        writeFields     false;
+        scalingFactor   1.0;
+        writePrecision  8;
+        enabled         true;
+        log             true;
+        writeControl    adjustableRunTime;
+        writeInterval   $samplingTime;
+    }
+
+    surfaceFieldValue26
+    {
+        type            surfaceFieldValue;
+        libs            ("libfieldFunctionObjects.so");
+
+        fields          $sampledFields;
+        operation       areaAverage;
+        regionType      sampledSurface;
+        sampledSurfaceDict
+        {
+            type            plane;
+            planeType       pointAndNormal;
+            {
+                basePoint           (0 0.186 0);
+                normalVector        (0 1 0);
+            }
+            interpolateTo    cell;
+        };
+        name            average1;
+        writeFields     false;
+        scalingFactor   1.0;
+        writePrecision  8;
+        enabled         true;
+        log             true;
+        writeControl    adjustableRunTime;
+        writeInterval   $samplingTime;
+    }
+
+    surfaceFieldValue27
+    {
+        type            surfaceFieldValue;
+        libs            ("libfieldFunctionObjects.so");
+
+        fields          $sampledFields;
+        operation       areaAverage;
+        regionType      sampledSurface;
+        sampledSurfaceDict
+        {
+            type            plane;
+            planeType       pointAndNormal;
+            {
+                basePoint           (0 0.1968 0);
+                normalVector        (0 1 0);
+            }
+            interpolateTo    cell;
+        };
+        name            average1;
+        writeFields     false;
+        scalingFactor   1.0;
+        writePrecision  8;
+        enabled         true;
+        log             true;
+        writeControl    adjustableRunTime;
+        writeInterval   $samplingTime;
+    }
+
+    surfaceFieldValue28
+    {
+        type            surfaceFieldValue;
+        libs            ("libfieldFunctionObjects.so");
+
+        fields          $sampledFields;
+        operation       areaAverage;
+        regionType      sampledSurface;
+        sampledSurfaceDict
+        {
+            type            plane;
+            planeType       pointAndNormal;
+            {
+                basePoint           (0 0.2076 0);
+                normalVector        (0 1 0);
+            }
+            interpolateTo    cell;
+        };
+        name            average1;
+        writeFields     false;
+        scalingFactor   1.0;
+        writePrecision  8;
+        enabled         true;
+        log             true;
+        writeControl    adjustableRunTime;
+        writeInterval   $samplingTime;
+    }
+
+    surfaceFieldValue29
+    {
+        type            surfaceFieldValue;
+        libs            ("libfieldFunctionObjects.so");
+
+        fields          $sampledFields;
+        operation       areaAverage;
+        regionType      sampledSurface;
+        sampledSurfaceDict
+        {
+            type            plane;
+            planeType       pointAndNormal;
+            {
+                basePoint           (0 0.2184 0);
+                normalVector        (0 1 0);
+            }
+            interpolateTo    cell;
+        };
+        name            average1;
+        writeFields     false;
+        scalingFactor   1.0;
+        writePrecision  8;
+        enabled         true;
+        log             true;
+        writeControl    adjustableRunTime;
+        writeInterval   $samplingTime;
+    }
+
+    surfaceFieldValue30
+    {
+        type            surfaceFieldValue;
+        libs            ("libfieldFunctionObjects.so");
+
+        fields          $sampledFields;
+        operation       areaAverage;
+        regionType      sampledSurface;
+        sampledSurfaceDict
+        {
+            type            plane;
+            planeType       pointAndNormal;
+            {
+                basePoint           (0 0.2292 0);
+                normalVector        (0 1 0);
+            }
+            interpolateTo    cell;
+        };
+        name            average1;
+        writeFields     false;
+        scalingFactor   1.0;
+        writePrecision  8;
+        enabled         true;
+        log             true;
+        writeControl    adjustableRunTime;
+        writeInterval   $samplingTime;
+    }
+
+    surfaceFieldValue31
+    {
+        type            surfaceFieldValue;
+        libs            ("libfieldFunctionObjects.so");
+
+        fields          $sampledFields;
+        operation       areaAverage;
+        regionType      sampledSurface;
+        sampledSurfaceDict
+        {
+            type            plane;
+            planeType       pointAndNormal;
+            {
+                basePoint           (0 0.24 0);
+                normalVector        (0 1 0);
+            }
+            interpolateTo    cell;
+        };
+        name            average1;
+        writeFields     false;
+        scalingFactor   1.0;
+        writePrecision  8;
+        enabled         true;
+        log             true;
+        writeControl    adjustableRunTime;
+        writeInterval   $samplingTime;
+    }
+
+    surfaceFieldValue32
+    {
+        type            surfaceFieldValue;
+        libs            ("libfieldFunctionObjects.so");
+
+        fields          $sampledFields;
+        operation       areaAverage;
+        regionType      sampledSurface;
+        sampledSurfaceDict
+        {
+            type            plane;
+            planeType       pointAndNormal;
+            {
+                basePoint           (0 0.2508 0);
+                normalVector        (0 1 0);
+            }
+            interpolateTo    cell;
+        };
+        name            average1;
+        writeFields     false;
+        scalingFactor   1.0;
+        writePrecision  8;
+        enabled         true;
+        log             true;
+        writeControl    adjustableRunTime;
+        writeInterval   $samplingTime;
+    }
+
+    surfaceFieldValue33
+    {
+        type            surfaceFieldValue;
+        libs            ("libfieldFunctionObjects.so");
+
+        fields          $sampledFields;
+        operation       areaAverage;
+        regionType      sampledSurface;
+        sampledSurfaceDict
+        {
+            type            plane;
+            planeType       pointAndNormal;
+            {
+                basePoint           (0 0.2616 0);
+                normalVector        (0 1 0);
+            }
+            interpolateTo    cell;
+        };
+        name            average1;
+        writeFields     false;
+        scalingFactor   1.0;
+        writePrecision  8;
+        enabled         true;
+        log             true;
+        writeControl    adjustableRunTime;
+        writeInterval   $samplingTime;
+    }
+
+    surfaceFieldValue34
+    {
+        type            surfaceFieldValue;
+        libs            ("libfieldFunctionObjects.so");
+
+        fields          $sampledFields;
+        operation       areaAverage;
+        regionType      sampledSurface;
+        sampledSurfaceDict
+        {
+            type            plane;
+            planeType       pointAndNormal;
+            {
+                basePoint           (0 0.2724 0);
+                normalVector        (0 1 0);
+            }
+            interpolateTo    cell;
+        };
+        name            average1;
+        writeFields     false;
+        scalingFactor   1.0;
+        writePrecision  8;
+        enabled         true;
+        log             true;
+        writeControl    adjustableRunTime;
+        writeInterval   $samplingTime;
+    }
+
+    surfaceFieldValue35
+    {
+        type            surfaceFieldValue;
+        libs            ("libfieldFunctionObjects.so");
+
+        fields          $sampledFields;
+        operation       areaAverage;
+        regionType      sampledSurface;
+        sampledSurfaceDict
+        {
+            type            plane;
+            planeType       pointAndNormal;
+            {
+                basePoint           (0 0.2832 0);
+                normalVector        (0 1 0);
+            }
+            interpolateTo    cell;
+        };
+        name            average1;
+        writeFields     false;
+        scalingFactor   1.0;
+        writePrecision  8;
+        enabled         true;
+        log             true;
+        writeControl    adjustableRunTime;
+        writeInterval   $samplingTime;
+    }
+
+}
+
+
+// ************************************************************************* //
